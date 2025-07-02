@@ -1,0 +1,64 @@
+{% extends "finance/base.html" %}
+
+{% block title %} Login page  {% endblock title %}
+
+
+
+{% block content %}
+<div class="min-h-screen flex items-center justify-center">
+  <div class="max-w-md w-full space-y-8 bg-white p-6 rounded-xl shadow-lg">
+    <div>
+      <h2 class="text-3xl font-bold text-gray-900 text-center">Finance Tracker</h2>
+      <p class="mt-2 text-sm text-gray-600 text-center">Please sign in to your account</p>
+    </div>
+
+    <form method="POST">
+      {% csrf_token %}
+
+      <!-- Username -->
+      <div class="mb-4">
+        <label for="id_username" class="block font-medium mb-1">Username</label>
+        <input type="text" name="username" id="id_username" class="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500" placeholder="Enter your username" required value="{{ form.username.value|default_if_none:'' }}">
+        {% if form.username.errors %}
+          <p class="text-red-500 text-sm mt-1">{{ form.username.errors.0 }}</p>
+        {% endif %}
+      </div>
+
+      <!-- Password -->
+      <div class="mb-6">
+        <label for="id_password" class="block font-medium mb-1">Password</label>
+        <input type="password" name="password" id="id_password" class="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500" placeholder="Enter password" required>
+        {% if form.password.errors %}
+          <p class="text-red-500 text-sm mt-1">{{ form.password.errors.0 }}</p>
+        {% endif %}
+      </div>
+
+      <!-- Submit Button -->
+      <div class="text-center">
+        <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 rounded-lg transition">Sign In</button>
+      </div>
+    </form>
+    <div class="text-center space-y-2">
+
+  <!-- Register Link -->
+  <p class="text-sm text-gray-600">
+    Don’t have an account?
+    <a href="{% url 'register' %}" class="font-medium text-indigo-600 hover:text-indigo-500 transition duration-150 ease-in-out">
+      Register here
+    </a>
+  </p>
+
+  <!-- Forgot Password Link -->
+  <p class="text-sm text-gray-500">
+    <a href="{% url 'password_reset' %}" class="font-medium text-indigo-600 hover:text-indigo-500 transition duration-150 ease-in-out">
+      Forgot password?
+    </a>
+  </p>
+
+</div>
+
+  </div>
+</div>
+{% endblock content %}
+
+

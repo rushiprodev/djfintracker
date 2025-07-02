@@ -1,0 +1,101 @@
+{% extends "finance/base.html" %}
+
+{% block title %}Add Transaction{% endblock title %}
+
+{% block content %}
+<div class="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-md w-full space-y-8 bg-white p-6 rounded-xl shadow-lg">
+        <div class="text-center">
+            <h1 class="text-2xl font-bold text-gray-900">Add New Transaction</h1>
+            <p class="mt-2 text-sm text-gray-600">Record your income or expense</p>
+        </div>
+    <!-- Add New Transaction Form -->
+<form method="POST" class="space-y-6">
+  {% csrf_token %}
+
+  <!-- Title -->
+  <div>
+    <label for="id_title" class="block font-medium mb-1">Title</label>
+    <input type="text" name="title" id="id_title"
+           value="{{ form.title.value|default_if_none:'' }}"
+           class="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+           placeholder="Enter transaction title">
+    {% if form.title.errors %}
+      <p class="text-red-500 text-sm mt-1">{{ form.title.errors.0 }}</p>
+    {% endif %}
+  </div>
+
+  <!-- Amount -->
+  <div>
+    <label for="id_amount" class="block font-medium mb-1">Amount</label>
+    <input type="number" name="amount" id="id_amount"
+           value="{{ form.amount.value|default_if_none:'' }}"
+           class="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+           placeholder="Enter amount">
+    {% if form.amount.errors %}
+      <p class="text-red-500 text-sm mt-1">{{ form.amount.errors.0 }}</p>
+    {% endif %}
+  </div>
+
+  <!-- Transaction Type -->
+  <div>
+    <label for="id_transaction_type" class="block font-medium mb-1">Transaction Type</label>
+    <select name="transaction_type" id="id_transaction_type"
+            class="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500">
+      {% for choice in form.transaction_type.field.choices %}
+        <option value="{{ choice.0 }}" {% if form.transaction_type.value == choice.0 %}selected{% endif %}>
+          {{ choice.1 }}
+        </option>
+      {% endfor %}
+    </select>
+    {% if form.transaction_type.errors %}
+      <p class="text-red-500 text-sm mt-1">{{ form.transaction_type.errors.0 }}</p>
+    {% endif %}
+  </div>
+
+  <!-- Date -->
+  <div>
+    <label for="id_date" class="block font-medium mb-1">Date</label>
+    <input type="date" name="date" id="id_date"
+           value="{{ form.date.value|default_if_none:'' }}"
+           class="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500">
+    {% if form.date.errors %}
+      <p class="text-red-500 text-sm mt-1">{{ form.date.errors.0 }}</p>
+    {% endif %}
+  </div>
+
+  <!-- Category -->
+  <div>
+    <label for="id_category" class="block font-medium mb-1">Category</label>
+    <input type="text" name="category" id="id_category"
+           value="{{ form.category.value|default_if_none:'' }}"
+           class="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+           placeholder="Enter category (e.g., Food, Rent)">
+    {% if form.category.errors %}
+      <p class="text-red-500 text-sm mt-1">{{ form.category.errors.0 }}</p>
+    {% endif %}
+  </div>
+
+  <!-- Submit Button -->
+  <div class="text-center">
+    <button type="submit"
+            class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 rounded-lg transition">
+      Add Transaction
+    </button>
+  </div>
+</form>
+
+<!-- Back to Dashboard Button -->
+<div class="text-center mt-6">
+  <a href="{% url 'dashboard' %}"
+     class="inline-block px-6 py-3  hover:bg-gray-400 text-gray-800 font-semibold rounded-lg transition">
+    ← Back to Dashboard
+  </a>
+</div>
+
+
+    </div>
+   
+</div>
+
+{% endblock content %}
